@@ -1,0 +1,254 @@
+<app-header></app-header>
+<div class="container">
+    <h2 class="h2s">Gestión de Pacientes</h2>
+
+    <button mat-raised-button color="primary" (click)="exportarDatosDesdeArreglo(pacientes, 'Pacientes')">
+        Exportar Pacientes
+      </button>
+
+    <input
+      type="file"
+      accept=".xlsx"
+      (change)="importarPacientes($event)"
+      hidden
+      #fileInput
+    />
+    <button mat-raised-button color="primary" (click)="fileInput.click()">
+      Importar Pacientes
+    </button>
+
+    <div class="button-container">
+        <button mat-raised-button color="primary" (click)="abrirModal()">Crear Paciente</button>
+      </div>
+    <!-- Formulario para crear o editar paciente -->
+    <ng-template #modalCrearPaciente>
+        <mat-dialog-content>
+            <h2 mat-dialog-title>{{ paciente.id === 0 ? 'Agregar Paciente' : 'Actualizar Paciente' }}</h2>
+          <form (ngSubmit)="guardarPaciente()">
+            <mat-form-field appearance="fill">
+              <mat-label>Nombre</mat-label>
+              <input matInput [(ngModel)]="paciente.nombrePaciente" name="nombrePaciente" required>
+            </mat-form-field>
+      
+            <mat-form-field appearance="fill">
+              <mat-label>Especie</mat-label>
+              <input matInput [(ngModel)]="paciente.especie" name="especie" required>
+            </mat-form-field>
+      
+            <mat-form-field appearance="fill">
+              <mat-label>Raza</mat-label>
+              <input matInput [(ngModel)]="paciente.raza" name="raza" required>
+            </mat-form-field>
+      
+            <mat-form-field appearance="fill">
+              <mat-label>Fecha de Nacimiento</mat-label>
+              <input matInput [(ngModel)]="paciente.fechaNacimiento" name="fechaNacimiento" type="date" required>
+            </mat-form-field>
+      
+            <mat-form-field appearance="fill">
+              <mat-label>Fecha de Registro</mat-label>
+              <input matInput [(ngModel)]="paciente.fechaRegistro" name="fechaRegistro" type="date" required>
+            </mat-form-field>
+      
+            <mat-form-field appearance="fill">
+              <mat-label>Dueño</mat-label>
+              <input matInput [(ngModel)]="paciente.dueno" name="dueno" required>
+            </mat-form-field>
+      
+            <div mat-dialog-actions>
+                <button mat-button (click)="dialogRef.close()">Cancelar</button>
+                <button mat-raised-button color="primary" type="submit">Guardar Paciente</button>
+            </div>
+          </form>
+        </mat-dialog-content>
+      </ng-template>
+      
+  
+    <br><br>
+    <!-- Tabla para la lista de pacientes -->
+    <h3 class="h3s"></h3>
+
+
+
+    <table class="tabledesign">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Especie</th>
+          <th>Raza</th>
+          <th>Fecha de Nacimiento</th>
+          <th>Fecha de Registro</th>
+          <th>Dueño</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let paciente of pacientes">
+            <td>{{ paciente.nombrePaciente }}</td>
+            <td>{{ paciente.especie }}</td>
+            <td>{{ paciente.raza }}</td>
+            <td>{{ paciente.fechaNacimiento | date }}</td>
+            <td>{{ paciente.fechaRegistro | date }}</td>
+            <td>{{ paciente['dueno'] }}</td> <!-- Mostrar el nombre del dueño -->
+            <td>
+                <button mat-icon-button color="primary" (click)="editarPaciente(paciente)">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                  <button mat-icon-button color="warn" (click)="eliminarPaciente(paciente.id)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+  </div>
+<br><br><br>
+  <hr>
+
+
+  <div class="containerr">
+    <h2 class="h2s">Gestión de Dueños</h2>
+
+    <button mat-raised-button color="primary" (click)="exportarDatosDesdeArreglo(duenos, 'Duenos')">
+        Exportar Dueños
+      </button>
+
+      <input
+      type="file"
+      accept=".xlsx"
+      (change)="importarDuenos($event)"
+      hidden
+      #fileInput
+    />
+    <button mat-raised-button color="primary" (click)="fileInput.click()">
+      Importar Dueños
+    </button>
+
+      <div class="button-container">
+        <button mat-raised-button color="primary" (click)="abrirModaldu()">Crear Dueño</button>
+      </div>
+    <!-- Formulario para crear o editar paciente -->
+    <ng-template #modalCrearDueno>
+        <mat-dialog-content>
+          <h2 mat-dialog-title>{{ dueno.id === 0 ? 'Agregar Dueño' : 'Actualizar Dueño' }}</h2>
+          <form (ngSubmit)="guardarDueno()">
+            <!-- Nombre -->
+            <mat-form-field appearance="fill">
+              <mat-label>Nombre</mat-label>
+              <input
+                matInput
+                [(ngModel)]="dueno.nombreDueno"
+                name="nombreDueno"
+                required
+              />
+            </mat-form-field>
+      
+            <!-- Tipo de Identificación -->
+            <mat-form-field appearance="fill">
+              <mat-label>Tipo de Identificación</mat-label>
+              <input
+                matInput
+                [(ngModel)]="dueno.tipoIdentificacionDueno"
+                name="tipoIdentificacionDueno"
+                required
+              />
+            </mat-form-field>
+      
+            <!-- Identificación -->
+            <mat-form-field appearance="fill">
+              <mat-label>Identificación del Dueño</mat-label>
+              <input
+                matInput
+                type="number"
+                [(ngModel)]="dueno.identificacionDueno"
+                name="identificacionDueno"
+                required
+              />
+            </mat-form-field>
+      
+            <!-- Ciudad -->
+            <mat-form-field appearance="fill">
+              <mat-label>Ciudad</mat-label>
+              <input
+                matInput
+                [(ngModel)]="dueno.ciudad"
+                name="ciudad"
+                required
+              />
+            </mat-form-field>
+      
+            <!-- Dirección -->
+            <mat-form-field appearance="fill">
+              <mat-label>Dirección</mat-label>
+              <input
+                matInput
+                [(ngModel)]="dueno.direccion"
+                name="direccion"
+                required
+              />
+            </mat-form-field>
+      
+            <!-- Teléfono -->
+            <mat-form-field appearance="fill">
+              <mat-label>Teléfono</mat-label>
+              <input
+                matInput
+                type="number"
+                [(ngModel)]="dueno.telefono"
+                name="telefono"
+                required
+              />
+            </mat-form-field>
+      
+            <!-- Botones de acción -->
+            <div mat-dialog-actions>
+              <button mat-button (click)="dialogRef.close()">Cancelar</button>
+              <button
+                mat-raised-button
+                color="primary"
+                type="submit"
+              >
+                {{ dueno.id === 0 ? 'Agregar Dueño' : 'Actualizar Dueño' }}
+              </button>
+            </div>
+          </form>
+        </mat-dialog-content>
+      </ng-template>
+  
+    <br><br>
+    <!-- Tabla para la lista de pacientes -->
+    <h3></h3>
+    <table class="tabledesign">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Tipo ID</th>
+          <th>Identificacion</th>
+          <th>Ciudad</th>
+          <th>Direccion</th>
+          <th>Telefono</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let dueno of duenos">
+          <td>{{ dueno.nombreDueno }}</td>
+          <td>{{ dueno.tipoIdentificacionDueno }}</td>
+          <td>{{ dueno.identificacionDueno }}</td>
+          <td>{{ dueno.ciudad}}</td>
+          <td>{{ dueno.direccion}}</td>
+          <td>{{ dueno.telefono}}</td>
+          <td>
+            <button mat-icon-button color="primary" (click)="editarDueno(dueno)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" (click)="eliminarDueno(dueno.id)">
+                <mat-icon>delete</mat-icon>
+              </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  

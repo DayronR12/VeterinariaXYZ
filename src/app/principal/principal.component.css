@@ -1,0 +1,52 @@
+mat-card {
+    margin: 1px;
+  }
+  
+  mat-card-header {
+    background-color: #5005ff;
+  }
+
+.tabledesign{
+    width: 100%;
+}
+
+.h2s{
+  text-align: center;
+  
+}
+
+
+  table {
+
+    width: 70%;
+    margin-top: -5%;
+    border-collapse: separate;
+    text-align: center;
+  }
+
+  .button-container {
+    display: flex;
+    justify-content: flex-end; /* Mueve el contenido al final del contenedor */
+    margin-bottom: 20px; /* Agrega un espacio debajo si es necesario */
+    
+  }
+  
+  
+  th, td {
+    padding: 3px;
+    text-align: center;
+  }
+  
+  th {
+    background-color: #1140c446;
+    font-weight: bold;
+  }
+  
+  mat-header-row, mat-row {
+    border-bottom: 1px solid #ddd;
+  }
+  
+  button {
+    margin-right: 5px;
+  }
+  
